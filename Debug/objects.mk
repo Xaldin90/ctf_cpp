@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -l/root/Downloads/libb64-1.2.src/libb64-1.2/src
+LIBS :=
 

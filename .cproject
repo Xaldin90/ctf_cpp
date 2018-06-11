@@ -65,11 +65,7 @@
                             							
                             <tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1110705358" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
                                 								
-                                <option id="gnu.cpp.link.option.libs.1389250188" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
-                                    									
-                                    <listOptionValue builtIn="false" value="/root/Downloads/libb64-1.2.src/libb64-1.2/src"/>
-                                    								
-                                </option>
+                                <option id="gnu.cpp.link.option.libs.1389250188" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs"/>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.2145470628" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
                                     									

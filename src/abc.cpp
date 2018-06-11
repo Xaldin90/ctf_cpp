@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <openssl/md5.h>
+#include <algorithm>
 
 #include "base64.h"
 
@@ -34,29 +36,82 @@ int main() {
 
 	char pw[12];
 
-	char checkpw[12] = "hello world";
+	char checkpw[] = "hello world";
 
 	printf("enter Password: ");
 	fgets(pw,12,stdin);
 
 	int inputLen = sizeof(checkpw);
 
-	//Base64 bla = new Base64();
+
 	int encodedLength = Base64::EncodedLength(checkpw);
 	char encodedPw[encodedLength];
-	Base64::Encode(checkpw, inputLen, encodedPw, encodedLength);
+	Base64::Encode(checkpw, inputLen-1, encodedPw, encodedLength);
 
-	 printf(encodedPw);
+	printf(encodedPw);
+	printf("\n");
 
 
-	if(strcmp (pw,checkpw) == 0){
-		printf("richtig\n");
-		spawn_shell();
-	}else{
-		printf("falsch\n");
-	}
+	string revPw = string(encodedPw);
+
+	revPw.pop_back();
+	reverse(revPw.begin(),revPw.end());
+
+	cout<<(revPw);
+	printf("\n");
+
+
+
+	 unsigned char digest[MD5_DIGEST_LENGTH];
+
+	 MD5((unsigned char*)&revPw, revPw.length(), (unsigned char*)&digest);
+
+
+
+	 char mdString[33];
+
+	 for(int i = 0; i < 16; i++)
+	      sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+
+	 printf("md5 digest: %s\n", mdString);
+
+
+
+
+//	if(strcmp (pw,checkpw) == 0){
+//		printf("richtig\n");
+//		spawn_shell();
+//	}else{
+//		printf("falsch\n");
+//	}
 
 	return 0;
 }
+
+//int main() {
+//
+//	char pw[12];
+//
+//	printf("enter Password: ");
+//	fgets(pw,12,stdin);
+//
+//
+//
+//	//-----------------------------------------------------------------
+//
+//	unsigned char digest[MD5_DIGEST_LENGTH];
+//    char string[] = "hello world";
+//
+//    MD5((unsigned char*)&string, strlen(string), (unsigned char*)&digest);
+//
+//    char mdString[33];
+//
+//    for(int i = 0; i < 16; i++)
+//         sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
+//
+//    printf("md5 digest: %s\n", mdString);
+//
+//    return 0;
+//}
 
 
