@@ -1,17 +1,15 @@
-//============================================================================
-// Name        : abc.cpp
-// Author      : flo
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
 
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <openssl/md5.h>
+#include <openssl/sha.h>
+#include <openssl/rsa.h>
+#include <openssl/x509.h>
+#include <openssl/evp.h>
 #include <algorithm>
+#include <sstream>
 
 #include "base64.h"
 
@@ -30,88 +28,62 @@ void spawn_shell() {
 }
 
 
+string encrypt(char* x){
 
+	string y = string(x);
+
+	y.pop_back();
+	reverse(y.begin(),y.end());
+
+	return y;
+}
+
+string super_secret_encryption(string x){
+
+	string b;
+	std:stringstream s;
+	for(int i = 0; i < x.length();i++){
+
+		int y = static_cast<int>(x[i]);
+		s << hex << y;
+
+	}
+	b = s.str();
+	return b;
+}
 
 int main() {
 
+	char enteredPw[20];
 	char pw[12];
+	string checkpw = "3d514762793932646738476273564761";
 
-	char checkpw[] = "hello world";
+	printf("Enter Password: ");
+	fgets(enteredPw,20,stdin);
 
-	printf("enter Password: ");
-	fgets(pw,12,stdin);
+	int i = 0;
+	for(; enteredPw[i] != '\0';i++);
+	if(i >= 13){
+			printf("Wrong PW!!!\n");
+			return 0;
+		}else{
+			for(int x = 0; x <=12; x++){pw[x] = enteredPw[x];}
+		}
 
-	int inputLen = sizeof(checkpw);
 
-
-	int encodedLength = Base64::EncodedLength(checkpw);
+	int encodedLength = Base64::EncodedLength(pw);
 	char encodedPw[encodedLength];
-	Base64::Encode(checkpw, inputLen-1, encodedPw, encodedLength);
-
-	printf(encodedPw);
-	printf("\n");
-
-
-	string revPw = string(encodedPw);
-
-	revPw.pop_back();
-	reverse(revPw.begin(),revPw.end());
-
-	cout<<(revPw);
-	printf("\n");
+	int inputLen = sizeof(pw);
+	Base64::Encode(pw, inputLen-1, encodedPw, encodedLength);
+	string b = super_secret_encryption(encrypt(encodedPw));
 
 
-
-	 unsigned char digest[MD5_DIGEST_LENGTH];
-
-	 MD5((unsigned char*)&revPw, revPw.length(), (unsigned char*)&digest);
-
-
-
-	 char mdString[33];
-
-	 for(int i = 0; i < 16; i++)
-	      sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
-
-	 printf("md5 digest: %s\n", mdString);
-
-
-
-
-//	if(strcmp (pw,checkpw) == 0){
-//		printf("richtig\n");
-//		spawn_shell();
-//	}else{
-//		printf("falsch\n");
-//	}
+	if(b.compare(checkpw) == 0){
+		printf("Correct PW!\n");
+		spawn_shell();
+	}else{
+		printf("Wrong PW!\n");
+	}
 
 	return 0;
 }
-
-//int main() {
-//
-//	char pw[12];
-//
-//	printf("enter Password: ");
-//	fgets(pw,12,stdin);
-//
-//
-//
-//	//-----------------------------------------------------------------
-//
-//	unsigned char digest[MD5_DIGEST_LENGTH];
-//    char string[] = "hello world";
-//
-//    MD5((unsigned char*)&string, strlen(string), (unsigned char*)&digest);
-//
-//    char mdString[33];
-//
-//    for(int i = 0; i < 16; i++)
-//         sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
-//
-//    printf("md5 digest: %s\n", mdString);
-//
-//    return 0;
-//}
-
-
