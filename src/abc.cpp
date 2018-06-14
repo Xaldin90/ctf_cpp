@@ -56,8 +56,7 @@ int main() {
 
 	char enteredPw[20];
 	char pw[12];
-	string checkpw = "3d514762793932646738476273564761";
-
+	string checkpw = "3d4544546d687a645452474e744a4453";
 	printf("Enter Password: ");
 	fgets(enteredPw,20,stdin);
 
