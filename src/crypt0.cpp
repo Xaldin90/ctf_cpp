@@ -61,7 +61,6 @@ int main() {
 	FILE * fp = fopen("flag/comparePw", "r");
 	fgets(checkpwArray,34,fp);
 	string checkpw = string(checkpwArray);
-	//string checkpw = "3d4544546d687a645452474e744a4453";
 	printf("Enter Password: ");
 	fgets(enteredPw,20,stdin);
 
