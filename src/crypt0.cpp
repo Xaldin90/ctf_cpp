@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <openssl/md5.h>
 #include <openssl/sha.h>
@@ -57,7 +58,7 @@ int main() {
 	char enteredPw[20];
 	char pw[12];
 	char checkpwArray[34];
-	File fp = fopen("/home/flag/comparePw", "r");
+	FILE * fp = fopen("/home/flag/comparePw", "r");
 	fgets(checkpwArray,34,fp);
 	string checkpw = string(checkpwArray);
 	//string checkpw = "3d4544546d687a645452474e744a4453";
