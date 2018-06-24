@@ -58,7 +58,7 @@ int main() {
 	char enteredPw[20];
 	char pw[12];
 	char checkpwArray[34];
-	FILE * fp = fopen("/home/flag/comparePw", "r");
+	FILE * fp = fopen("flag/comparePw", "r");
 	fgets(checkpwArray,34,fp);
 	string checkpw = string(checkpwArray);
 	//string checkpw = "3d4544546d687a645452474e744a4453";
